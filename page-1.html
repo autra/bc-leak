@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html style="height: 100%;" lang="en-US"><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Ifram1</title>
+  <meta charset="utf-8">
+</html>
+
+<body>
+  <h1>Iframe1</h1>
+
+  <script>
+
+    function Test() {
+      this.ports = [];
+      chan1 = new BroadcastChannel('chan1');
+
+      chan1.onmessage = function(ev) {
+        console.log('Iframe: message from chan1: ', ev.data);
+      };
+
+      chan1.postMessage("Coucou!");
+      this.ports.push(chan1);
+    }
+
+    var test = new Test();
+    console.log('ports length', test.ports.length);
+
+  </script>
+</body>
+

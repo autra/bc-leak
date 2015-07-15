@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html style="height: 100%;" lang="en-US"><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Ifram2</title>
+  <meta charset="utf-8">
+</html>
+
+<body>
+  <h1>Iframe2</h1>
+
+  <script>
+    var chan2 = new BroadcastChannel("chan2");
+    chan2.onmessage = function(ev) {
+      console.log('Iframe2: message from chan2: ', ev.data);
+    };
+
+    chan2.postMessage("Coucou!");
+    chan2.close();
+
+  </script>
+</body>
+

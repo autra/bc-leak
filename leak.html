@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html style="height: 100%;" lang="en-US"><head>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>HTML Examples</title>
+    <meta charset="utf-8">
+    <script type="text/javascript">
+      // intentionnally making this global
+      window.chan1 = new BroadcastChannel('chan1');
+      chan1.onmessage = function(ev) {
+        console.log('message from chan1: ', ev.data);
+      }
+
+      window.chan2 = new BroadcastChannel('chan2');
+      chan2.onmessage = function(ev) {
+        console.log('message from chan2: ', ev.data);
+      }
+
+      window.setTimeout(function() {
+        chan1.postMessage('I will kill you, iframe1');
+        chan2.postMessage('I will kill you, iframe2');
+        console.log('Killing iframes');
+        // close chan2, but let chan1 open
+        //chan2.close();
+
+        // kill all iframes
+        // in a timeout, to let above postMessage finish.
+        window.setTimeout(function() {
+          var container = document.getElementById('container');
+          container.removeChild(document.getElementById('iframe1'));
+          container.removeChild(document.getElementById('iframe2'));
+          console.log('iframes are killed');
+        }, 50);
+      }, 5000);
+      
+    </script>
+  </head>
+
+  <body>
+    <div id="container">
+      <iframe id="iframe1" src="page-1.html"></iframe>
+      <p>---------------------------------</p>
+      <iframe id="iframe2" src="page-2.html"></iframe>
+    </div>
+
+    <script type="text/javascript">
+      'use strict';
+      chan1.postMessage('I\'m ready');
+      chan2.postMessage('I\'m ready');
+
+    </script>
+
+  </body>
+</html>
+
